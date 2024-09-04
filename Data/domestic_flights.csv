@@ -1,0 +1,2 @@
+FlightNo,Origin,Destination,DepartTime,DepartWeek,Duration,ArriveTime,ArriveWeek,Airline,EconomyFare,BusinessFare,FirstFare
+001,JFK,LAX,08:00:00,0,05:00,13:00:00,0,Delta,300.00,500.00,800.00
