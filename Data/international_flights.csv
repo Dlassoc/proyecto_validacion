@@ -1,0 +1,2 @@
+FlightNo,Origin,Destination,DepartTime,DepartWeek,Duration,ArriveTime,ArriveWeek,Airline,EconomyFare,BusinessFare,FirstFare
+002,JFK,LHR,18:00:00,2,07:00,01:00:00,3,British Airways,400.00,700.00,1000.00
