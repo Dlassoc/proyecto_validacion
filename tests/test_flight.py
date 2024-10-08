@@ -24,7 +24,7 @@ class FlightSearchTestCase(TestCase):
             airline="Emirates",
             business_fare=500
         )
-        self.flight.depart_day.add(self.weekday)  # Añadir el día de salida
+        self.flight.depart_day.add(self.weekday)  
 
         # Imprime los detalles del vuelo para verificar que se ha creado correctamente
         print("Detalles del vuelo creado:")
@@ -52,8 +52,14 @@ class FlightSearchTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
         # Verifica que el contexto contiene el vuelo esperado
-        self.assertEqual(len(response.context['flights']), 1)
-        self.assertEqual(response.context['flights'][0], self.flight)
+        flights = response.context['flights']
+        self.assertEqual(len(flights), 1)
+        
+        # Compara campos individuales en lugar del objeto completo
+        flight = flights[0]
+        self.assertEqual(flight.origin.code, 'CDG')
+        self.assertEqual(flight.destination.code, 'DXB')
+        self.assertEqual(flight.business_fare, 500)
 
         # Verifica los precios mínimo y máximo en clase 'business'
         self.assertEqual(response.context['min_price'], 500)

@@ -7,9 +7,7 @@ class LoginViewTestCase(TestCase):
         self.client = Client()
         self.user = User.objects.create_user(username='testuser', password='testpassword')
 
-    #Usuario correcto y contraseña correcta
     def test_login_success(self):
-        
         response = self.client.post(reverse('login'), {
             'username': 'testuser',
             'password': 'testpassword'
@@ -17,7 +15,6 @@ class LoginViewTestCase(TestCase):
         self.assertEqual(response.status_code, 302)  
         self.assertRedirects(response, reverse('index'))
     
-    #Usuario incorrecto y contraseña correcta
     def test_login_failure_wrong_user(self):
         response = self.client.post(reverse('login'), {
             'username': 'wrongtestuser',
@@ -26,7 +23,6 @@ class LoginViewTestCase(TestCase):
         self.assertEqual(response.status_code, 200)  
         self.assertContains(response, "Invalid username and/or password.")
 
-    #Usuario correcto y contraseña incorrecta
     def test_login_failure_wrong_password(self):
         response = self.client.post(reverse('login'), {
             'username': 'testuser',
@@ -35,7 +31,6 @@ class LoginViewTestCase(TestCase):
         self.assertEqual(response.status_code, 200)  
         self.assertContains(response, "Invalid username and/or password.")
 
-    #Usuario incorrecto y contraseña incorrecta
     def test_login_failure_wrong(self):
         response = self.client.post(reverse('login'), {
             'username': 'wrongtestuser',
@@ -44,7 +39,6 @@ class LoginViewTestCase(TestCase):
         self.assertEqual(response.status_code, 200)  
         self.assertContains(response, "Invalid username and/or password.")
     
-    #Usuario vacio y contraseña vacia
     def test_login_failure_empty(self):
         response = self.client.post(reverse('login'), {
             'username': '',

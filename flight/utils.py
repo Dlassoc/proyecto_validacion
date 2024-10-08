@@ -3,34 +3,36 @@ from flight.models import *
 from .models import Week, Place, Flight
 from tqdm import tqdm
 
+
 def get_number_of_lines(file):
     with open(file) as f:
         for i, l in enumerate(f):
             pass
     return i + 1
-
 def createWeekDays():
     days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
     for i,day in enumerate(days):
         Week.objects.create(number=i, name=day)
 
+
 def addPlaces():
-    file = open("./Data/airports.csv", "r")
-    print("Adding Airports...")
-    total = get_number_of_lines("./Data/airports.csv")
-    for i, line in tqdm(enumerate(file), total=total):
-        if i == 0:
-            continue
-        data = line.split(',')
-        city = data[0].strip()
-        airport = data[1].strip()
-        code = data[2].strip()
-        country = data[3].strip()
-        try:
-            Place.objects.create(city=city, airport=airport, code=code, country=country)
-        except Exception as e:
-            continue
-    print("Done.\n")
+    with open("./Data/airports.csv", "r") as file:
+        print("Adding Airports...")
+        total = get_number_of_lines("./Data/airports.csv")
+        for i, line in tqdm(enumerate(file), total=total):
+            if i == 0:
+                continue
+            data = line.split(',')
+            city = data[0].strip()
+            airport = data[1].strip()
+            code = data[2].strip()
+            country = data[3].strip()
+            try:
+                Place.objects.create(city=city, airport=airport, code=code, country=country)
+            except Exception as e:
+                print(f"Error adding flight: {e}")
+
+        print("Done.\n")
 
 def addDomesticFlights():
     file = open("./Data/domestic_flights.csv", "r")

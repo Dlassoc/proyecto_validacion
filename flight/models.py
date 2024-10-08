@@ -3,8 +3,6 @@ from django.contrib.auth.models import AbstractUser
 
 from datetime import datetime
 
-# Create your models here.
-
 class User(AbstractUser):
     def __str__(self):
         return f"{self.id}: {self.first_name} {self.last_name}"
@@ -46,7 +44,7 @@ class Flight(models.Model):
 
 
 GENDER = (
-    ('male','MALE'),    #(actual_value, human_readable_value)
+    ('male','MALE'),    
     ('female','FEMALE')
 )
 

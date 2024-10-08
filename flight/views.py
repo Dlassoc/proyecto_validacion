@@ -1,70 +1,44 @@
-from django.shortcuts import render, HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, HttpResponseRedirect
 from django.urls import reverse
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
-
+import re
 from datetime import datetime
 import math
 from .models import *
 from capstone.utils import render_to_pdf, createticket
-
-
-#Fee and Surcharge variable
 from .constant import FEE
-from flight.utils import createWeekDays, addPlaces, addDomesticFlights, addInternationalFlights
-
-try:
-    if len(Week.objects.all()) == 0:
-        createWeekDays()
-
-    if len(Place.objects.all()) == 0:
-        addPlaces()
-
-    if len(Flight.objects.all()) == 0:
-        print("Do you want to add flights in the Database? (y/n)")
-        if input().lower() in ['y', 'yes']:
-            addDomesticFlights()
-            addInternationalFlights()
-except:
-    pass
-
-# Create your views here.
+from django.db.models import Q
 
 def index(request):
-    min_date = f"{datetime.now().date().year}-{datetime.now().date().month}-{datetime.now().date().day}"
-    max_date = f"{datetime.now().date().year if (datetime.now().date().month+3)<=12 else datetime.now().date().year+1}-{(datetime.now().date().month + 3) if (datetime.now().date().month+3)<=12 else (datetime.now().date().month+3-12)}-{datetime.now().date().day}"
+    today = datetime.now().date()
+    min_date = f"{today.year}-{today.month}-{today.day}"
+    max_date = f"{today.year if (today.month + 3) <= 12 else today.year + 1}-{(today.month + 3) if (today.month + 3) <= 12 else (today.month + 3 - 12)}-{today.day}"
     if request.method == 'POST':
         origin = request.POST.get('Origin')
         destination = request.POST.get('Destination')
         depart_date = request.POST.get('DepartDate')
-        seat = request.POST.get('SeatClass')
+        seat = request.POST.get('SeatClass').lower()
         trip_type = request.POST.get('TripType')
-        if(trip_type == '1'):
-            return render(request, 'flight/index.html', {
+        
+        context = {
             'origin': origin,
             'destination': destination,
             'depart_date': depart_date,
-            'seat': seat.lower(),
-            'trip_type': trip_type
-        })
-        elif(trip_type == '2'):
-            return_date = request.POST.get('ReturnDate')
-            return render(request, 'flight/index.html', {
-            'min_date': min_date,
-            'max_date': max_date,
-            'origin': origin,
-            'destination': destination,
-            'depart_date': depart_date,
-            'seat': seat.lower(),
+            'seat': seat,
             'trip_type': trip_type,
-            'return_date': return_date
-        })
-    else:
-        return render(request, 'flight/index.html', {
             'min_date': min_date,
             'max_date': max_date
-        })
+        }
+        
+        if trip_type == '2':
+            context['return_date'] = request.POST.get('ReturnDate')
+        
+        return render(request, 'flight/index.html', context)
+    
+    return render(request, 'flight/index.html', {'min_date': min_date, 'max_date': max_date})
+
 
 def login_view(request):
     if request.method == "POST":
@@ -85,7 +59,6 @@ def login_view(request):
         else:
             return render(request, "flight/login.html")
 
-import re
 
 def register_view(request):
     if request.method == "POST":
@@ -130,16 +103,16 @@ def logout_view(request):
     return HttpResponseRedirect(reverse("index"))
 
 def query(request, q):
-    places = Place.objects.all()
-    filters = []
     q = q.lower()
-    for place in places:
-        if (q in place.city.lower()) or (q in place.airport.lower()) or (q in place.code.lower()) or (q in place.country.lower()):
-            filters.append(place)
-    return JsonResponse([{'code':place.code, 'city':place.city, 'country': place.country} for place in filters], safe=False)
+    places = Place.objects.filter(
+        Q(city__icontains=q) | 
+        Q(airport__icontains=q) | 
+        Q(code__icontains=q) | 
+        Q(country__icontains=q)
+    )
+    return JsonResponse([{'code': place.code, 'city': place.city, 'country': place.country} for place in places], safe=False)
 
 @csrf_exempt
-@csrf_exempt 
 def flight(request):
     o_place = request.GET.get('Origin')
     d_place = request.GET.get('Destination')
@@ -154,9 +127,9 @@ def flight(request):
         returndate = request.GET.get('ReturnDate')
         return_date = datetime.strptime(returndate, "%Y-%m-%d")
         flightday2 = Week.objects.filter(number=return_date.weekday()).first()
+        print(f"{flightday2} cosoooooo")
         origin2 = Place.objects.get(code=d_place.upper())
-        destination2 = Place.objects.get(code=o_place.upper())  ##
-
+        destination2 = Place.objects.get(code=o_place.upper())  
     seat = request.GET.get('SeatClass')
     flightday = Week.objects.filter(number=depart_date.weekday()).first()
     destination = Place.objects.get(code=d_place.upper())
@@ -211,7 +184,6 @@ def flight(request):
             except AttributeError:
                 max_price2 = min_price2 = 0
 
-    # Renderizado del template
     if trip_type == '2':
         return render(request, "flight/search.html", {
             'flights': flights,
@@ -337,12 +309,12 @@ def book(request):
                 return HttpResponse(e)
             
 
-            if f2:    ##
-                return render(request, "flight/payment.html", { ##
-                    'fare': fare+FEE,   ##
-                    'ticket': ticket1.id,   ##
-                    'ticket2': ticket2.id   ##
-                })  ##
+            if f2:    
+                return render(request, "flight/payment.html", { 
+                    'fare': fare+FEE,   
+                    'ticket': ticket1.id,   
+                    'ticket2': ticket2.id   
+                })  
             return render(request, "flight/payment.html", {
                 'fare': fare+FEE,
                 'ticket': ticket1.id
