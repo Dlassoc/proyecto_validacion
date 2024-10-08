@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 import re
 from datetime import datetime
 import math
-from .models import *
+from .models import Place, Flight, Week, Passenger, Ticket
 from capstone.utils import render_to_pdf, createticket
 from .constant import FEE
 from django.db.models import Q

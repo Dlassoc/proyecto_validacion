@@ -1,14 +1,16 @@
 from datetime import timedelta, datetime
-from flight.models import *
+from flight.models import Week, Place, Flight
 from .models import Week, Place, Flight
 from tqdm import tqdm
 
 
 def get_number_of_lines(file):
+    i = 0  # Inicializar i
     with open(file) as f:
         for i, l in enumerate(f):
             pass
-    return i + 1
+    return i
+
 def createWeekDays():
     days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
     for i,day in enumerate(days):
