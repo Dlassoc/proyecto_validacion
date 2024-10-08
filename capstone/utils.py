@@ -2,7 +2,7 @@ from io import BytesIO
 from django.http import HttpResponse
 from django.template.loader import get_template
 
-from flight.models import *
+from flight.models import Ticket
 import secrets
 from datetime import datetime, timedelta
 from xhtml2pdf import pisa
