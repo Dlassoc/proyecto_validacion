@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponseRedirect, HttpResponse
+from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -58,7 +58,6 @@ def login_view(request):
             return HttpResponseRedirect(reverse('index'))
         else:
             return render(request, "flight/login.html")
-
 
 def register_view(request):
     if request.method == "POST":
