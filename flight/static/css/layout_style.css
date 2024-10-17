@@ -307,7 +307,6 @@ footer .container > div{
     cursor: pointer;
     max-height: 70%;
     overflow: auto;
-    cursor: pointer;
 }
 .each_places_from_list, .each_places_to_list{
     padding: 10px 15px;
