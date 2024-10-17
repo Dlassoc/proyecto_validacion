@@ -81,9 +81,7 @@
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
 }
-.each-flight-div > div{
-    display: flex;
-}
+
 .company-details{
     padding-left: 5px;
     padding-right: 5px;

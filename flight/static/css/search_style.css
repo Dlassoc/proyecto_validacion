@@ -95,8 +95,8 @@
     padding-left: 12px;
     padding-right: 12px;
 }
-.trip-modify button{
-}
+
+
 .spl-btn{
     transition-duration: .2s;
     color: white;
@@ -117,9 +117,7 @@
 .spl-btn2:focus{
     box-shadow: none!important;
 }
-/*.trip-modify button:hover, button:active, button:focus{
-    background-color: rgba(220,53,69,.1);
-}*/
+
 .trip-modify button:hover, button:active{
     background-color: rgb(255, 235, 245);
     color: rgb(189, 4, 116);
@@ -211,9 +209,7 @@
 .each-flight-div{
     display: flex;
     justify-content: space-between;
-    padding: 15px 20px;/*
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, .1);*/
+    padding: 15px 20px;
 }
 .each-flight-div-box{
     border-radius: 5px;
@@ -226,9 +222,7 @@
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
 }
-.each-flight-div > div{
-    display: flex;
-}
+
 .company-details{
     padding-left: 5px;
     padding-right: 5px;
@@ -255,11 +249,7 @@
 .flight-origin-time, .flight-destination-time{
     width: 40%;
 }
-.flight-stops{
-    width: 20%;
-    display: flex;
-    justify-content: center;
-}
+
 .flight-time h5{
     margin-bottom: 2px;
 }
@@ -319,27 +309,6 @@
   }
 
 
-/*.flight-stops-seperator{
-    border-top: 2px solid #979797;
-    width: 50px;
-    height: 2px;
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin: auto;
-    top: 0;
-    bottom: 0;
-    z-index: 1;
-}
-.flight-stops-disc{
-    width: 6px;
-    height: 6px;
-    border: 1px solid #000;
-    display: inline-block;
-    background-color: #fff;
-    position: relative;
-    z-index: 2;
-}*/
 .flight-details-btn{
     display: flex;
     flex: 1;
@@ -351,15 +320,13 @@
 .sort-div{
     display: flex;
     justify-content: space-between;
-    /*margin-left: 20px;
-    margin-right: 150px;*/
+
     padding-left: 20px;
     padding-right: 20px;
     font-size: .9em;
 }
 .sort-arrive, .sort-depart{
-    /*margin-left: 34px;
-    margin-right: 4px;*/
+
     text-align: center;
 }
 .sort-price{
@@ -434,17 +401,7 @@
     border: .5px dotted rgb(220, 45, 60);
     transition-duration: .4s;
 }
-/*.active-div{
-    background-color: rgb(220, 45, 60);
-}*/
 
-
-
-
-
-
-
-/************************************/
 .tabs{
     margin-top:50px;
     font-size:15px;
@@ -487,16 +444,10 @@
     transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
     
     background: #b80190;
-    background: linear-gradient(45deg, crimson 0%, #b80190 100%);
-    /*background: #05abe0;*/
-    /*background: linear-gradient(45deg, #05abe0 0%,#8200f4 100%);*/
-    
+    background: linear-gradient(45deg, crimson 0%, #b80190 100%); 
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#05abe0', endColorstr='#8200f4',GradientType=1 );
   }
   
-/***********************************/
-
-
 
 
 .bb2{
@@ -526,57 +477,9 @@
     .section1{
         font-size: 1em;
     }
-    /*.query-data-div .container{
-        padding-right: 0;
-        padding-left: 0;
-        display: block;
-    }*/
+
     .query-result-div .container{
         padding-right: 0;
         padding-left: 0;
     }
-    /*.query-data-div .white{
-        font-size: medium;
-    }
-    .trip-class, .trip-modify, .trip-time, .trip-places{
-        padding-left: 0;
-        padding-right: 0;
-        width: 100%;
-        margin-bottom: 7px!important;
-    }
-    .trip-places > .from-div{
-        width: 45%;
-        text-align: center;
-    }
-    .trip-places > .to-div{
-        width: 45%;
-        text-align: center;
-    }
-    .trip-places > .trip-type-div{
-        width: 10%;
-        text-align: center;
-    }
-    .query-data-div .trip-time{
-        justify-content: space-between;
-    }
-    .query-data-div .trip-time > div{
-        width: 40%;
-        text-align: center;
-    }
-    .trip-class{
-        display: flex;
-        justify-content: center;
-        text-align: center;
-    }
-    .trip-modify{
-        display: flex;
-        justify-content: center;
-    }
-    .trip-places{
-        margin-top: 7px!important;
-    }
-    .spl-btn{
-        padding: .3rem .65rem;
-    }*/
-    /*Next css in othet css file*/
 }

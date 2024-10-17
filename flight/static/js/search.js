@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
     flight_duration2();
-    //document.querySelector(".filter-price2 input[type=range]").addEventListener('input', filter); //filter_price
     filter_price2();
     document.querySelector(".clr-filter-div2 button").addEventListener('click', reset_filter2);
 });
@@ -12,16 +11,13 @@ function flight_duration2() {
     });
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////
 
 function filter2(element=null) {
-    //reset_filter2();
     filter_price2();
     if (element) {
         inactive2(element);
         active2(element);   
     }
-    //let type = element.dataset.type;
     let start = null;
     let end = null;
     let flights = null;
@@ -43,7 +39,6 @@ function filter2(element=null) {
         }
         arrival_slot2(flights, start, end);
     }
-    //flights = document.querySelectorAll("#flights_div2 .each-flight-div-box.show");
 }
 
 function arrival_slot2(flights, start, end) {
@@ -51,12 +46,10 @@ function arrival_slot2(flights, start, end) {
         for (let i = 0; i < flights.length; i++) {
             time = flights[i].querySelector(".flight-destination-time2 .flight-time h5").innerText.split(":");
             if((parseInt(time[0]) >= parseInt(start)) && (parseInt(time[0]) < parseInt(end))) {
-                //flights[i].style.display = 'block';
                 flights[i].classList.add('show');
                 flights[i].classList.remove('hide');
             }
             else {
-                //flights[i].style.display = 'none';
                 flights[i].classList.add('hide');
                 flights[i].classList.remove('show');
             }
@@ -68,12 +61,10 @@ function departure_slot2(flights, start, end) {
         for (let i = 0; i < flights.length; i++) {
             time = flights[i].querySelector(".flight-origin-time .flight-time h5").innerText.split(":");
             if((parseInt(time[0]) >= parseInt(start)) && (parseInt(time[0]) < parseInt(end))) {
-                //flights[i].style.display = 'block';
                 flights[i].classList.add('show');
                 flights[i].classList.remove('hide');
             }
             else {
-                //flights[i].style.display = 'none';
                 flights[i].classList.add('hide');
                 flights[i].classList.remove('show');
             }
@@ -81,7 +72,6 @@ function departure_slot2(flights, start, end) {
     }
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////
 
 function timeslot(slot) {
     inactive2(slot);
@@ -154,12 +144,10 @@ function filter_price2() {
     let flights = div.querySelectorAll(".each-flight-div-box");
     for (let i = 0; i < flights.length; i++) {
         if (flights[i].querySelector(".flight-price span").innerText > parseInt(value)) {
-            //flights[i].style.display = 'none';
             flights[i].classList.add('hide');
             flights[i].classList.remove('show');
         }
         else {
-            //flights[i].style.display = 'block';
             flights[i].classList.add('show');
             flights[i].classList.remove('hide');
         }
@@ -177,7 +165,6 @@ function reset_filter2() {
 
     let flights = document.querySelector("#flights_div2").querySelectorAll(".each-flight-div-box");
     for (let i = 0; i < flights.length; i++) {
-            //flights[i].style.display = 'block';
             flights[i].classList.add('show');
             flights[i].classList.remove('hide');
     }
