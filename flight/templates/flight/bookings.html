@@ -71,7 +71,6 @@
                             <div>
                                 <div class="ticket-action-div">
                                     {% if ticket.status == 'CONFIRMED' %}
-                                        <!--<button class="btn btn-outline-primary btnp">Print Ticket</button>-->
                                         <form action="{% url 'getticket' %}" method="get" target="_blank">
                                             <input type="hidden" name="ref" value="{{ticket.ref_no}}">
                                             <button type="submit" class="btn btn-outline-info btnp pbtn">

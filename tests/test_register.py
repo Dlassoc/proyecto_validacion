@@ -7,18 +7,18 @@ class RegisterViewTestCase(TransactionTestCase):
     def setUp(self):
         self.client = Client()
 
-    def test_register_success(self):
-        response = self.client.post(reverse('register'), {
-            'firstname': 'John',
-            'lastname': 'Doe',
-            'username': 'johndoe',
-            'email': 'johndoe@example.com',
-            'password': 'password123',
-            'confirmation': 'password123'
-        })
-        self.assertEqual(response.status_code, 302)
-        self.assertTrue(User.objects.filter(username='johndoe').exists())
-        self.assertRedirects(response, reverse('index'))
+def test_register_success(self):
+    response = self.client.post(reverse('register'), {
+        'firstname': 'John',
+        'lastname': 'Doe',
+        'username': 'johndoe',
+        'email': 'johndoe@example.com',
+        'password': 'password123',
+        'confirmation': 'password123'
+    })
+    self.assertEqual(response.status_code, 302)
+    self.assertTrue(User.objects.filter(username='johndoe').exists())
+    self.assertRedirects(response, reverse('index'))
 
     def test_register_password_mismatch(self):
         response = self.client.post(reverse('register'), {

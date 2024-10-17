@@ -1,4 +1,6 @@
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseNotAllowed
+from django.views.decorators.http import require_http_methods
 from django.urls import reverse
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -11,7 +13,15 @@ from capstone.utils import render_to_pdf, createticket
 from .constant import FEE
 from django.db.models import Q
 
+
+@require_http_methods(["GET", "POST"])
 def index(request):
+    if request.method == "GET":
+        # Handle the GET request safely
+        return render(request, 'flight/index.html')
+    
+    elif request.method == "POST":
+        return render(request, 'index.html', {"message": "Form submitted!"})
     today = datetime.now().date()
     min_date = f"{today.year}-{today.month}-{today.day}"
     max_date = f"{today.year if (today.month + 3) <= 12 else today.year + 1}-{(today.month + 3) if (today.month + 3) <= 12 else (today.month + 3 - 12)}-{today.day}"
@@ -39,7 +49,7 @@ def index(request):
     
     return render(request, 'flight/index.html', {'min_date': min_date, 'max_date': max_date})
 
-
+@require_http_methods(["GET", "POST"])
 def login_view(request):
     if request.method == "POST":
         username = request.POST["username"]
@@ -59,6 +69,7 @@ def login_view(request):
         else:
             return render(request, "flight/login.html")
 
+@require_http_methods(["GET", "POST"])
 def register_view(request):
     if request.method == "POST":
         fname = request.POST['firstname']
@@ -96,11 +107,12 @@ def register_view(request):
     else:
         return render(request, "flight/register.html")
 
-
+@require_http_methods(["GET", "POST"])
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
 
+@require_http_methods(["GET", "POST"])
 def query(request, q):
     q = q.lower()
     places = Place.objects.filter(
@@ -111,7 +123,7 @@ def query(request, q):
     )
     return JsonResponse([{'code': place.code, 'city': place.city, 'country': place.country} for place in places], safe=False)
 
-@csrf_exempt
+@require_http_methods(["GET", "POST"])
 def flight(request):
     o_place = request.GET.get('Origin')
     d_place = request.GET.get('Destination')
@@ -212,7 +224,7 @@ def flight(request):
             'max_price': math.ceil(max_price/100)*100,
             'min_price': math.floor(min_price/100)*100
         })
-
+@require_http_methods(["GET", "POST"])
 def review(request):
     flight_1 = request.GET.get('flight1Id')
     date1 = request.GET.get('flight1Date')
@@ -257,6 +269,7 @@ def review(request):
     else:
         return HttpResponseRedirect(reverse("login"))
 
+@require_http_methods(["GET", "POST"])
 def book(request):
     if request.method == 'POST':
         if request.user.is_authenticated:
@@ -322,7 +335,8 @@ def book(request):
             return HttpResponseRedirect(reverse("login"))
     else:
         return HttpResponse("Method must be post.")
-
+    
+@require_http_methods(["GET", "POST"])
 def payment(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
@@ -362,7 +376,7 @@ def payment(request):
     else:
         return HttpResponseRedirect(reverse('login'))
 
-
+@require_http_methods(["GET", "POST"])
 def ticket_data(request, ref):
     ticket = Ticket.objects.get(ref_no=ref)
     return JsonResponse({
@@ -373,7 +387,6 @@ def ticket_data(request, ref):
         'status': ticket.status
     })
 
-@csrf_exempt
 def get_ticket(request):
     ref = request.GET.get("ref")
     if not ref:
@@ -390,7 +403,7 @@ def get_ticket(request):
     except Ticket.DoesNotExist:
         return HttpResponse("Ticket not found.", status=404)
 
-
+@require_http_methods(["GET", "POST"])
 def bookings(request):
     if request.user.is_authenticated:
         tickets = Ticket.objects.filter(user=request.user).order_by('-booking_date')
@@ -401,7 +414,6 @@ def bookings(request):
     else:
         return HttpResponseRedirect(reverse('login'))
 
-@csrf_exempt
 def cancel_ticket(request):
     if request.method == 'POST':
         if request.user.is_authenticated:
@@ -427,6 +439,7 @@ def cancel_ticket(request):
     else:
         return HttpResponse("Method must be POST.")
 
+@require_http_methods(["GET", "POST"])
 def resume_booking(request):
     if request.method == 'POST':
         if request.user.is_authenticated:
@@ -454,4 +467,7 @@ def terms_and_conditions(request):
     return render(request, 'flight/terms.html')
 
 def about_us(request):
-    return render(request, 'flight/about.html')
+    if request.method == "GET":
+        return render(request, 'flight/about.html')
+    else:
+        return HttpResponseNotAllowed(['GET'])  
