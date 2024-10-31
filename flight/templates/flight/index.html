@@ -33,28 +33,28 @@
                         </div>
                         <div class="input-row">
                             <label for="flight-from">From: </label>
-                            <input type="text" name="Origin" placeholder="From" id="flight-from" class="form-control mr-sm-3" onblur="hideplaces(this)" data-value="{{origin | lower}}" data-list="places_from" autocomplete="off" value="{{origin | upper}}">  <!--list="places_from"-->
+                            <input type="text" name="Origin" placeholder="From" id="flight-from" class="form-control mr-sm-3" onblur="hideplaces(this)" data-value="{{origin | lower}}" data-list="places_from" autocomplete="off" value="{{origin | upper}}">
                             <div id="places_from" class="places_box">
-                                <div class="each_places_from_list places__list" data-value="del" onclick="selectplace(this)">Delhi (India)</div>
-                                <div class="each_places_from_list places__list" data-value="bom" onclick="selectplace(this)">Mumbai (India)</div>
-                                <div class="each_places_from_list places__list" data-value="bkk" onclick="selectplace(this)">Bangkok (Thailand)</div>
-                                <div class="each_places_from_list places__list" data-value="nrt" onclick="selectplace(this)">Tokyo (Japan)</div>
-                                <div class="each_places_from_list places__list" data-value="sin" onclick="selectplace(this)">Singapore (Singapore)</div>
-                                <div class="each_places_from_list places__list" data-value="tpe" onclick="selectplace(this)">Taipei (Taiwan)</div>
-                                <div class="each_places_from_list places__list" data-value="nyc" onclick="selectplace(this)">New York (USA)</div>
+                                <div class="each_places_from_list places__list" data-value="del" id="del" onclick="selectplace(this)">Delhi (India)</div>
+                                <div class="each_places_from_list places__list" data-value="bom" id="bom" onclick="selectplace(this)">Mumbai (India)</div>
+                                <div class="each_places_from_list places__list" data-value="bkk" id="bkk" onclick="selectplace(this)">Bangkok (Thailand)</div>
+                                <div class="each_places_from_list places__list" data-value="nrt" id="nrt" onclick="selectplace(this)">Tokyo (Japan)</div>
+                                <div class="each_places_from_list places__list" data-value="sin" id="sin" onclick="selectplace(this)">Singapore (Singapore)</div>
+                                <div class="each_places_from_list places__list" data-value="tpe" id="tpe" onclick="selectplace(this)">Taipei (Taiwan)</div>
+                                <div class="each_places_from_list places__list" data-value="nyc" id="nyc" onclick="selectplace(this)">New York (USA)</div>
                             </div>
                         </div>
                         <div class="input-row">
                             <label for="flight_to">To: </label>
                             <input type="text" name="Destination" placeholder="To" id="flight-to" class="form-control mr-sm-3" onblur="hideplaces(this)" data-value="{{destination | lower}}" data-list="places_to" autocomplete="off" value="{{destination | upper}}">
                             <div id="places_to" class="places_box">
-                                <div class="each_places_to_list places__list" data-value="del" onclick="selectplace(this)">Delhi (India)</div>
-                                <div class="each_places_to_list places__list" data-value="bom" onclick="selectplace(this)">Mumbai (India)</div>
-                                <div class="each_places_to_list places__list" data-value="bkk" onclick="selectplace(this)">Bangkok (Thailand)</div>
-                                <div class="each_places_to_list places__list" data-value="nrt" onclick="selectplace(this)">Tokyo (Japan)</div>
-                                <div class="each_places_to_list places__list" data-value="sin" onclick="selectplace(this)">Singapore (Singapore)</div>
-                                <div class="each_places_to_list places__list" data-value="tpe" onclick="selectplace(this)">Taipei (Taiwan)</div>
-                                <div class="each_places_to_list places__list" data-value="nyc" onclick="selectplace(this)">New York (USA)</div>
+                                <div class="each_places_to_list places__list" data-value="del" id="DEL" onclick="selectplace(this)">Delhi (India)</div>
+                                <div class="each_places_to_list places__list" data-value="bom" id="BOM" onclick="selectplace(this)">Mumbai (India)</div>
+                                <div class="each_places_to_list places__list" data-value="bkk" id="BKK" onclick="selectplace(this)">Bangkok (Thailand)</div>
+                                <div class="each_places_to_list places__list" data-value="nrt" id="NRT" onclick="selectplace(this)">Tokyo (Japan)</div>
+                                <div class="each_places_to_list places__list" data-value="sin" id="SIN" onclick="selectplace(this)">Singapore (Singapore)</div>
+                                <div class="each_places_to_list places__list" data-value="tpe" id="TPE" onclick="selectplace(this)">Taipei (Taiwan)</div>
+                                <div class="each_places_to_list places__list" data-value="nyc" id="NYC" onclick="selectplace(this)">New York (USA)</div>
                             </div>
                         </div>
                         <div class="input-row">

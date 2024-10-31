@@ -5,7 +5,7 @@ from tqdm import tqdm
 
 
 def get_number_of_lines(file):
-    i = 0  # Inicializar i
+    i = 0
     with open(file) as f:
         for i, l in enumerate(f):
             pass

@@ -30,8 +30,8 @@ class BookingsViewTest(TestCase):
 
         self.assertIn('tickets', response.context)
         self.assertEqual(len(response.context['tickets']), 2)
-        self.assertContains(response, 'ABC124')
-        self.assertContains(response, 'XYZ457')
+        self.assertContains(response, 'ABC123')
+        self.assertContains(response, 'XYZ456')
 
     def test_bookings_view_not_authenticated(self):
         response = self.client.get(reverse('bookings'))

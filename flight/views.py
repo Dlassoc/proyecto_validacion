@@ -17,7 +17,6 @@ from django.db.models import Q
 @require_http_methods(["GET", "POST"])
 def index(request):
     if request.method == "GET":
-        # Handle the GET request safely
         return render(request, 'flight/index.html')
     
     elif request.method == "POST":
