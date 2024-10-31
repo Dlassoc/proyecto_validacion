@@ -33,7 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector(".section1").style.display = 'none';
             document.querySelector(".section2").style.display = 'block';
             document.querySelector(".section3").style.display = 'none';
-            //document.querySelector(".section2 svg").style.animationPlayState = 'running';
         })
         .catch(() => {
             document.querySelector(".section1").style.display = 'none';

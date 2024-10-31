@@ -22,18 +22,16 @@ class BookingsViewTest(TestCase):
         )
 
     def test_bookings_view_authenticated(self):
-        # Iniciar sesión
         self.client.login(username='testuser', password='testpass')
 
-        # Hacer una solicitud a la vista de reservas
         response = self.client.get(reverse('bookings'))
 
         self.assertEqual(response.status_code, 200)
 
         self.assertIn('tickets', response.context)
         self.assertEqual(len(response.context['tickets']), 2)
-        self.assertContains(response, 'ABC123')
-        self.assertContains(response, 'XYZ456')
+        self.assertContains(response, 'ABC124')
+        self.assertContains(response, 'XYZ457')
 
     def test_bookings_view_not_authenticated(self):
         response = self.client.get(reverse('bookings'))

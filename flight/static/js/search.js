@@ -44,7 +44,7 @@ function filter2(element=null) {
 function arrival_slot2(flights, start, end) {
     if (flights) {
         for (let i = 0; i < flights.length; i++) {
-            time = flights[i].querySelector(".flight-destination-time2 .flight-time h5").innerText.split(":");
+            let time = flights[i].querySelector(".flight-destination-time2 .flight-time h5").innerText.split(":");
             if((parseInt(time[0]) >= parseInt(start)) && (parseInt(time[0]) < parseInt(end))) {
                 flights[i].classList.add('show');
                 flights[i].classList.remove('hide');
@@ -59,7 +59,7 @@ function arrival_slot2(flights, start, end) {
 function departure_slot2(flights, start, end) {
     if (flights) {
         for (let i = 0; i < flights.length; i++) {
-            time = flights[i].querySelector(".flight-origin-time .flight-time h5").innerText.split(":");
+            let time = flights[i].querySelector(".flight-origin-time .flight-time h5").innerText.split(":");
             if((parseInt(time[0]) >= parseInt(start)) && (parseInt(time[0]) < parseInt(end))) {
                 flights[i].classList.add('show');
                 flights[i].classList.remove('hide');
@@ -84,7 +84,7 @@ function timeslot(slot) {
     let flights = div.querySelectorAll(".each-flight-div-box");
     if (type === 'departure') {
         for (let i = 0; i < flights.length; i++) {
-            time = flights[i].querySelector(".flight-origin-time .flight-time h5").innerText.split(":");
+            let time = flights[i].querySelector(".flight-origin-time .flight-time h5").innerText.split(":");
             if((parseInt(time[0]) >= parseInt(start)) && (parseInt(time[0]) < parseInt(end))) {
                 flights[i].style.display = 'block';
             }
@@ -95,7 +95,7 @@ function timeslot(slot) {
     }
     if (type === 'arrival') {
         for (let i = 0; i < flights.length; i++) {
-            time = flights[i].querySelector(".flight-destination-time2 .flight-time h5").innerText.split(":");
+            let time = flights[i].querySelector(".flight-destination-time2 .flight-time h5").innerText.split(":");
             if((parseInt(time[0]) >= parseInt(start)) && (parseInt(time[0]) < parseInt(end))) {
                 flights[i].style.display = 'block';
             }

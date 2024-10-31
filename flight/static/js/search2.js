@@ -400,24 +400,10 @@ function show_filter() {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 function tab_change() {
-    var tabs = $('.tabs');
-    var selector = $('.tabs').find('a').length;
-    var activeItem = tabs.find('.active-div');
-    var activeWidth = activeItem.innerWidth();
+    let tabs = $('.tabs');
+    let activeItem = tabs.find('.active-div');
+    let activeWidth = activeItem.innerWidth();
     $(".selector").css({
     "left": activeItem.position.left + "px", 
     "width": activeWidth + "px"
@@ -427,8 +413,8 @@ function tab_change() {
     e.preventDefault();
     $('.tabs a').removeClass("active-div");
     $(this).addClass('active-div');
-    var activeWidth = $(this).innerWidth();
-    var itemPos = $(this).position();
+    let activeWidth = $(this).innerWidth();
+    let itemPos = $(this).position();
     $(".selector").css({
         "left":itemPos.left + "px", 
         "width": activeWidth + "px"
