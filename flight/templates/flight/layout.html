@@ -10,6 +10,7 @@
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.typekit.net/cav5lva.css">
   <link rel="stylesheet" href="{% static 'css/layout_style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/chat-bot.css' %}">
   <link rel="icon" type="image/ico" href="/static/img/favicon.ico">
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
     integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
@@ -21,6 +22,7 @@
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
     crossorigin="anonymous"></script>
   <script type="text/javascript" src="{% static 'js/layout.js' %}"></script>
+  <!-- <script type="text/javascript" src="{% static 'js/chat-bot.js' %}"></script> -->
   {% block head %}
   {% endblock %}
 </head>
@@ -45,9 +47,11 @@
           </li>
           <li class="nav-item {% if page == 'bookings' %}active{% endif %}">
             <a class="nav-link" href="{% url 'bookings' %}">My Bookings</a>
-          <li class="nav-item {% if page == 'favorites_list' %}active{% endif %}">
+            {% if user.is_authenticated %}
+          <li class="nav-item {% if page == 'favorites' %}active{% endif %}">
             <a class="nav-link" href="{% url 'favorites_list' %}">Favorites</a>
           </li>
+          {% endif %}
         </ul>
         <ul class="navbar-nav">
           {% if not user.is_authenticated %}
@@ -178,6 +182,75 @@
       </div>
     </footer>
   </div>
+  <button id="chatbot-button" title="Chatbot">💬</button>
+  <div id="chatbot-window" style="display:none;">
+    <div id="chatbot-header">
+      <span>Chatbot</span>
+      <button id="chatbot-close">&times;</button>
+    </div>
+    <div id="chatbot-messages"></div>
+    <form id="chatbot-form">
+      <input type="text" id="chatbot-input" autocomplete="off" placeholder="Write a message..." />
+      <button type="submit">Send</button>
+    </form>
+  </div>
+  <script>
+    const chatbotButton = document.getElementById('chatbot-button');
+    const chatbotWindow = document.getElementById('chatbot-window');
+    const chatbotClose = document.getElementById('chatbot-close');
+    const chatbotForm = document.getElementById('chatbot-form');
+    const chatbotInput = document.getElementById('chatbot-input');
+    const chatbotMessages = document.getElementById('chatbot-messages');
+
+    chatbotButton.addEventListener('click', () => {
+      chatbotWindow.style.display = 'flex';
+    });
+
+    chatbotClose.addEventListener('click', () => {
+      chatbotWindow.style.display = 'none';
+    });
+
+    chatbotForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const userMessage = chatbotInput.value.trim();
+      if (!userMessage) return;
+
+      // Mostrar mensaje del usuario
+      const userMsgDiv = document.createElement('div');
+      userMsgDiv.classList.add('user-message');
+      userMsgDiv.textContent = userMessage;
+      chatbotMessages.appendChild(userMsgDiv);
+
+      chatbotInput.value = '';
+      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+
+      // Simular respuesta del bot con delay
+      setTimeout(() => {
+        const botMsgDiv = document.createElement('div');
+        botMsgDiv.classList.add('bot-message');
+
+        // Respuestas básicas
+        let botResponse = "sorry, I didn't understand that.";
+        if (userMessage.toLowerCase().includes('help')) {
+          botResponse = "How can I assist you?";
+        } else if (userMessage.toLowerCase().includes('bye')) {
+          botResponse = "Goodbye! Have a great day!";
+        } else if (userMessage.toLowerCase().includes('thanks') || userMessage.toLowerCase().includes('thank you')) {
+          botResponse = "You're welcome!";
+        } else
+          if (userMessage.toLowerCase().includes('hello') || userMessage.toLowerCase().includes('hi')) {
+            botResponse = "Hello! How can I help you today?";
+          } else if (userMessage.toLowerCase().includes('flight')) {
+            botResponse = "Do you want information about flights?";
+          }
+
+        botMsgDiv.textContent = botResponse;
+        chatbotMessages.appendChild(botMsgDiv);
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+      }, 800);
+    });
+  </script>
+
 </body>
 
 </html>

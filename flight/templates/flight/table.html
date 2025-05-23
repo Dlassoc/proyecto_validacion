@@ -6,53 +6,59 @@
 {% endblock %}
 
 {% block body %}
-<h2>Tus vuelos favoritos</h2>
+<div class="container-table">
 
-<table border="1" cellpadding="5" cellspacing="0">
-    <thead>
-        <tr>
-            <th>Origen</th>
-            <th>Destino</th>
-            <th>Hora de salida</th>
-            <th>Aerolínea</th>
-            <th>Me gusta</th>
-            <th>Comentario</th>
-            <th>Guardar</th>
-            <th>Quitar</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for fav in favorites %}
-        <tr>
-            <td>{{ fav.flight.origin }}</td>
-            <td>{{ fav.flight.destination }}</td>
-            <td>{{ fav.flight.depart_time }}</td>
-            <td>{{ fav.flight.airline }}</td>
-            <td>
-                <form method="post" style="display:inline;">
-                    {% csrf_token %}
-                    <input type="hidden" name="favorite_id" value="{{ fav.id }}">
-                    <input type="checkbox" name="liked" {% if fav.liked %}checked{% endif %}>
-            </td>
-            <td>
-                <textarea name="comment" rows="2" placeholder="Añade un comentario...">{{ fav.comment }}</textarea>
-            </td>
-            <td>
-                <button type="submit">Guardar</button>
-                </form>
-            </td>
-            <td>
-                <form action="{% url 'toggle_favorite' fav.flight.id %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit">Quitar</button>
-                </form>
-            </td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="8">No tienes vuelos favoritos.</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+
+    <table border="1" cellpadding="5" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Origin</th>
+                <th>Destination</th>
+                <th>Departure Time</th>
+                <th>Airline</th>
+                <th>Comments</th>
+                <th>Save</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for fav in favorites %}
+            <tr>
+                <td>{{ fav.flight.origin }}</td>
+                <td>{{ fav.flight.destination }}</td>
+                <td>{{ fav.flight.depart_time }}</td>
+                <td>{{ fav.flight.airline }}</td>
+                <td>
+                    {% if fav.comment %}
+                    <ul>
+                        <li><strong>{{ fav.user.first_name }}:</strong> {{ fav.comment }}</li>
+                    </ul>
+                    {% else %}
+                    <em>No comments yet.</em>
+                    {% endif %}
+                </td>
+                <td>
+                    <form method="post" style="margin:0;">
+                        {% csrf_token %}
+                        <input type="hidden" name="favorite_id" value="{{ fav.id }}">
+                        <textarea name="comment" rows="2"
+                            placeholder="Add a comment...">{{ fav.comment }}</textarea><br>
+                        <button type="submit">Save</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="{% url 'toggle_favorite' fav.flight.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Remove</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7">You have no favorite flights.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

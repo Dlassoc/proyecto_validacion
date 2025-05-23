@@ -148,7 +148,6 @@ def flight(request):
         returndate = request.GET.get('ReturnDate')
         return_date = datetime.strptime(returndate, "%Y-%m-%d")
         flightday2 = Week.objects.filter(number=return_date.weekday()).first()
-        print(f"{flightday2} cosoooooo")
         origin2 = Place.objects.get(code=d_place.upper())
         destination2 = Place.objects.get(code=o_place.upper())
     seat = request.GET.get('SeatClass')
@@ -566,4 +565,4 @@ def favorites_list(request):
     else:
         form = FavoriteFlightForm()
 
-    return render(request, 'flight/table.html', {'favorites': favorites, 'form': form})
+    return render(request, 'flight/table.html', {'favorites': favorites, 'form': form, "page": 'favorites'})
