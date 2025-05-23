@@ -128,3 +128,12 @@ STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 
 
 AUTH_USER_MODEL = 'flight.User'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'alejandromarin203@gmail.com'
+EMAIL_HOST_PASSWORD = 'tfse otqy psjc syqo'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'alejandromarin203@gmail.com'
