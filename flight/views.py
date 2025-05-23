@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, HttpResponse, HttpResponseRedirect, get_object_or_404, redirect
 from django.http import HttpResponseNotAllowed
 from django.views.decorators.http import require_http_methods
 from django.urls import reverse
@@ -14,6 +14,10 @@ from .constant import FEE
 from django.db.models import Q
 from django.conf import settings
 from django.core.mail import send_mail
+
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from .forms import FavoriteFlightForm
 
 
 @require_http_methods(["GET", "POST"])
@@ -528,3 +532,38 @@ def about_us(request):
         return render(request, 'flight/about.html')
     else:
         return HttpResponseNotAllowed(['GET'])
+
+
+def table(request):
+    if request.method == "GET":
+        return render(request, 'flight/table.html')
+    else:
+        return HttpResponseNotAllowed(['GET'])
+
+
+@login_required
+def toggle_favorite(request, flight_id):
+    flight = get_object_or_404(Flight, id=flight_id)
+    fav, created = FavoriteFlight.objects.get_or_create(
+        user=request.user, flight=flight)
+    if not created:
+        fav.delete()
+    return redirect('favorites_list')
+
+
+@login_required
+def favorites_list(request):
+    favorites = request.user.favorite_flights.select_related('flight').all()
+
+    if request.method == 'POST':
+        fav_id = request.POST.get('favorite_id')
+        favorite = get_object_or_404(
+            FavoriteFlight, id=fav_id, user=request.user)
+        form = FavoriteFlightForm(request.POST, instance=favorite)
+        if form.is_valid():
+            form.save()
+            return redirect('favorites_list')
+    else:
+        form = FavoriteFlightForm()
+
+    return render(request, 'flight/table.html', {'favorites': favorites, 'form': form})

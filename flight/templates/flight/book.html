@@ -10,6 +10,11 @@
 
 {% block body %}
     <section class="section section1">
+
+            <form action="{% url 'toggle_favorite' flight1.id %}" method="post" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-secondary">Add to favorite</button>
+    </form>
         <form action="{% url 'book' %}" onsubmit="return book_submit()" method="POST">
             {% csrf_token %}
             <input type="hidden" name="flight1" value="{{flight1.id}}">

@@ -20,4 +20,7 @@ urlpatterns = [
     path('privacy-policy', views.privacy_policy, name="privacypolicy"),
     path('terms-and-conditions', views.terms_and_conditions, name="termsandconditions"),
     path('about-us', views.about_us, name="aboutus"),
+    path('table', views.favorites_list, name="table"),
+    path('favorites/', views.favorites_list, name='favorites_list'),
+    path('favorites/toggle/<int:flight_id>/', views.toggle_favorite, name='toggle_favorite'),
 ]

@@ -182,7 +182,8 @@ h5 {
 }
 .payment-btn{
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
+    /* gap:100px; */
 }
 
 .base-fare, .surcharges, .other-service, .total-fare{
