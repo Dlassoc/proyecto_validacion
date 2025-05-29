@@ -204,6 +204,14 @@
 
     chatbotButton.addEventListener('click', () => {
       chatbotWindow.style.display = 'flex';
+
+      if (chatbotMessages.children.length === 0) {
+        const botMsgDiv = document.createElement('div');
+        botMsgDiv.classList.add('bot-message');
+        botMsgDiv.textContent = "Hello! How can I help you today?";
+        chatbotMessages.appendChild(botMsgDiv);
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+      }
     });
 
     chatbotClose.addEventListener('click', () => {
@@ -224,7 +232,6 @@
       chatbotInput.value = '';
       chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
 
-      // Simular respuesta del bot con delay
       setTimeout(() => {
         const botMsgDiv = document.createElement('div');
         botMsgDiv.classList.add('bot-message');
